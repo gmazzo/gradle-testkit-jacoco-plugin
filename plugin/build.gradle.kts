@@ -30,10 +30,8 @@ gradlePlugin {
 }
 
 dependencies {
-    fun plugin(provider: Provider<PluginDependency>) =
-        provider.get().run { "$pluginId:$pluginId.gradle.plugin:$version" }
-
     compileOnly(gradleKotlinDsl())
+    compileOnly(variantOf(libs.jacoco) { classifier("runtime") })
 
     testImplementation(gradleKotlinDsl())
     testImplementation(gradleTestKit())
