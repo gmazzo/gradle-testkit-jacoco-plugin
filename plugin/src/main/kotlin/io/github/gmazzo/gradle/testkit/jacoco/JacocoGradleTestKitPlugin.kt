@@ -4,7 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.TEST_TASK_NAME
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.provideDelegate
@@ -33,7 +32,7 @@ class JacocoGradleTestKitPlugin : Plugin<Project> {
         val instrumentationTask =
             tasks.register<JacocoInstrumentationTask>("instrumentPluginClassesForJaCoCo") {
                 jacocoClasspath.from(configurations.named(ANT_CONFIGURATION_NAME))
-                instrumentedClassesDir.convention(layout.buildDirectory.dir("jacoco/instrumentedPluginClasses"))
+                instrumentedClassesDir.convention(layout.buildDirectory.dir("jacoco/instrumented-classes"))
             }
 
         val propertiesTask = tasks.register<JacocoAgentPropertiesTask>("generateJaCoCoAgentPropertiesForTestKit") {
@@ -48,7 +47,6 @@ class JacocoGradleTestKitPlugin : Plugin<Project> {
 
                 pluginClasspath.setFrom(
                     it.instrumentedClassesDir,
-                    it.classpath,
                     propertiesTask,
                     jacocoRuntime,
                     JacocoGradleTestKitPlugin::class.java.jarFile,
