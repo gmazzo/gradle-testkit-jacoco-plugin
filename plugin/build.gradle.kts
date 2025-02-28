@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.samReceiver)
     alias(libs.plugins.gradle.pluginPublish)
     alias(libs.plugins.publicationsReport)
+    id("io.github.gmazzo.gradle.testkit.jacoco") version "+" // yeah, self reference to latest published version, but we need it for computing coverage of tests
 }
 
 group = "io.github.gmazzo.gradle.testkit.jacoco"
@@ -30,24 +31,31 @@ gradlePlugin {
 }
 
 dependencies {
+    val jacocoRuntime = variantOf(libs.jacoco) { classifier("runtime") }
+
     compileOnly(gradleKotlinDsl())
-    compileOnly(variantOf(libs.jacoco) { classifier("runtime") })
+    compileOnly(jacocoRuntime)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.params)
 
     testImplementation(gradleKotlinDsl())
     testImplementation(gradleTestKit())
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.params)
+    testImplementation(libs.mockk)
+    testImplementation(jacocoRuntime)
 }
 
 testing.suites.withType<JvmTestSuite> {
     useJUnitJupiter()
 }
 
-tasks.check {
-    dependsOn(tasks.withType<JacocoReport>())
+tasks.test {
+    environment("TEMP_DIR", temporaryDir)
+    finalizedBy(tasks.jacocoTestReport)
 }
 
-tasks.withType<JacocoReport> {
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
     reports.xml.required = true
 }
 

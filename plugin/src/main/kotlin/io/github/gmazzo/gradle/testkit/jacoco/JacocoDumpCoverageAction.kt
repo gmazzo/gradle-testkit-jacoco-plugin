@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.always
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.jacoco.agent.rt.RT
 
-internal abstract class DumpAction : FlowAction<FlowParameters.None> {
+internal abstract class JacocoDumpCoverageAction : FlowAction<FlowParameters.None> {
 
     override fun execute(parameters: FlowParameters.None) {
         RT.getAgent().dump(true)
@@ -17,7 +17,7 @@ internal abstract class DumpAction : FlowAction<FlowParameters.None> {
     companion object {
 
         fun Gradle.dumpOnBuildFinished() {
-            gradle.serviceOf<FlowScope>().always(DumpAction::class) { }
+            gradle.serviceOf<FlowScope>().always(JacocoDumpCoverageAction::class) { }
         }
 
     }
