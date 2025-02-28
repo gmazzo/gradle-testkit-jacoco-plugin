@@ -8,10 +8,49 @@
 A Gradle plugin that enables JaCoCo coverage collection for Gradle TestKit's GradleRunner tests.
  
 # Usage
-Apply the plugin at the root project:
+Apply the plugin at your `java-gradle-plugin` project:
 ```kotlin
 plugins {
     `java-gradle-plugin`
     id("io.github.gmazzo.gradle.testkit.jacoco") version "<latest>" 
 }
 ```
+
+Then, on each test using [`GradleRunner`](https://docs.gradle.org/current/javadoc/org/gradle/testkit/runner/GradleRunner.html), 
+also apply the `jacoco-testkit-coverage` plugin at either root's `build.gradle` or `settings.gradle`:
+```kotlin
+class MyPluginFunctionalTest {
+    
+    @get:Rule
+    val temporaryFolder = TemporaryFolder()
+    
+    @Test
+    fun `should apply plugin`() {
+        temporaryFolder.root.resolve("settings.gradle").writeText(
+            """
+            plugins {
+                id("jacoco-testkit-coverage") # this will dump coverage data
+            }
+
+            rootProject.name = "test-project"
+            """.trimIndent()
+        )
+        
+        val result = GradleRunner.create()
+            .withProjectDir(temporaryFolder.root)
+            .withPluginClasspath()
+            .withArguments("myTask")
+            .build()
+    }
+}
+```
+> [!NOTE]
+> The `jacoco-testkit-coverage` is an internal plugin added by this TestKit extension.
+> It can be either applied to the root `Project`'s script or to the `Settings` script
+
+# How it works
+The plugin modifies [`java-gradle-plugin`](https://docs.gradle.org/current/userguide/java_gradle_plugin.html)'s
+`pluginUnderTestMetadata` classpath (the one computed by [`GradleRunner.withPluginClasspath`](https://docs.gradle.org/current/kotlin-dsl/gradle/org.gradle.testkit.runner/-gradle-runner/with-plugin-classpath.html)
+by using [`JaCoCo`'s Offline Instrumentation](https://www.jacoco.org/jacoco/trunk/doc/offline.html)
+
+Also, a `jacoco-testkit-coverage` plugin also added to `withPluginClasspath`, allowing to dump the coverage data after each build is run.

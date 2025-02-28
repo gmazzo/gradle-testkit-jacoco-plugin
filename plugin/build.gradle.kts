@@ -24,7 +24,7 @@ gradlePlugin {
             displayName = name
             implementationClass = "io.github.gmazzo.gradle.testkit.jacoco.JacocoGradleTestKitPlugin"
             description = "Enables JaCoCo coverage collection for Gradle TestKit's GradleRunner tests"
-            tags.addAll("jacoco", "gradle", "testkit", "offline", "jacoco-offline", "intrumentation", "gradle-runner")
+            tags.addAll("jacoco", "testkit", "offline", "jacoco-offline", "intrumentation", "gradle-runner")
         }
     }
 }
