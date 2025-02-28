@@ -25,11 +25,11 @@ class MyPluginFunctionalTest {
     val temporaryFolder = TemporaryFolder()
     
     @Test
-    fun `should apply plugin`() {
+    fun myPluginTest() {
         temporaryFolder.root.resolve("settings.gradle").writeText(
             """
             plugins {
-                id("jacoco-testkit-coverage") # this will dump coverage data
+                id("jacoco-testkit-coverage") // this will dump coverage data
             }
 
             rootProject.name = "test-project"
