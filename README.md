@@ -25,7 +25,7 @@ class MyPluginFunctionalTest {
     val temporaryFolder = TemporaryFolder()
     
     @Test
-    fun `should apply plugin`() {
+    fun myPluginTest() {
         temporaryFolder.root.resolve("settings.gradle").writeText(
             """
             plugins {
