@@ -4,7 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.TEST_TASK_NAME
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.provideDelegate

@@ -1,0 +1,5 @@
+plugins {
+    id("jacoco-testkit-coverage")
+}
+
+rootProject.name = "testProject"

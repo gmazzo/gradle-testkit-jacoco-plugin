@@ -1,6 +1,6 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
-import io.github.gmazzo.gradle.testkit.jacoco.DumpAction.Companion.dumpOnBuildFinished
+import io.github.gmazzo.gradle.testkit.jacoco.JacocoDumpCoverageAction.Companion.dumpOnBuildFinished
 import org.gradle.api.Plugin
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.GradleVersion
