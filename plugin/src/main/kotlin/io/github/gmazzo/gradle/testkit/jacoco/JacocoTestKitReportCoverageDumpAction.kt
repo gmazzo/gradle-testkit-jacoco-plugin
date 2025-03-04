@@ -11,8 +11,10 @@ import org.jacoco.agent.rt.RT
 internal abstract class DumpAction : FlowAction<FlowParameters.None> {
 
     override fun execute(parameters: FlowParameters.None) {
-        RT.getAgent().dump(true)
+        runCatching { RT.getAgent() } // it may not be started of no instrumented classes are run
+            .getOrNull()?.dump(true)
     }
+
 
     companion object {
 
