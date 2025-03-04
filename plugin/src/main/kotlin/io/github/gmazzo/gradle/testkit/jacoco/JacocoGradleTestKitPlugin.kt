@@ -47,6 +47,7 @@ class JacocoGradleTestKitPlugin : Plugin<Project> {
 
                 pluginClasspath.setFrom(
                     it.instrumentedClassesDir,
+                    it.classpath,
                     propertiesTask,
                     jacocoRuntime,
                     JacocoGradleTestKitPlugin::class.java.jarFile,

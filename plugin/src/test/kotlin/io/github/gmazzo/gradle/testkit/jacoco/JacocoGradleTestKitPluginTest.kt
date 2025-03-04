@@ -51,6 +51,9 @@ class JacocoGradleTestKitPluginTest {
         assertEquals(
             listOf(
                 "$projectDir/build/jacoco/instrumented-classes",
+                "$projectDir/build/classes/java/main",
+                "$projectDir/build/resources/main",
+                "$tempDir/work/.gradle-test-kit/caches/modules-2/files-2.1/com.squareup/javapoet/1.13.0/d6562d385049f35eb50403fa86bb11cce76b866a/javapoet-1.13.0.jar",
                 "$projectDir/build/tmp/generateJaCoCoAgentPropertiesForTestKit",
                 "$tempDir/work/.gradle-test-kit/caches/modules-2/files-2.1/org.jacoco/org.jacoco.agent/0.8.12/2bec6efe140e3a38a81607181476a4016ef2c613/org.jacoco.agent-0.8.12-runtime.jar",
                 projectDir.resolve("self-jar.txt").readText(),
@@ -59,13 +62,14 @@ class JacocoGradleTestKitPluginTest {
         )
 
         assertEquals(
-            listOf(
+            setOf(
                 "org/test/myplugin/utils/UtilsImpl.class",
                 "org/test/myplugin/utils/Utils.class",
                 "org/test/myplugin/MyPlugin.class",
+                "META-INF/gradle-plugins/myPlugin.properties",
             ),
             projectDir.resolve("build/jacoco/instrumented-classes").run root@{
-                walkTopDown().filter { it.isFile }.map { it.toRelativeString(this@root) }.toList()
+                walkTopDown().filter { it.isFile }.map { it.toRelativeString(this@root) }.toSet()
             })
 
         assertEquals(
