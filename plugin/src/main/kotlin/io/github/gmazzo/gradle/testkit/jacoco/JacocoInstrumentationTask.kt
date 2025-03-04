@@ -54,7 +54,7 @@ abstract class JacocoInstrumentationTask : DefaultTask() {
         withGroovyBuilder {
             "instrument"("destdir" to instrumentedClassesDir.get().asFile.absolutePath) {
                 classesDirs.forEach {
-                    "fileset"("dir" to it.absolutePath, "includes" to "**/*.class")
+                    "fileset"("dir" to it.absolutePath)
                 }
             }
         }

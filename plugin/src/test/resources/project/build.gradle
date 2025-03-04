@@ -1,0 +1,22 @@
+plugins {
+    id("java-gradle-plugin")
+    id("io.github.gmazzo.gradle.testkit.jacoco")
+}
+
+jacoco.toolVersion = "0.8.12"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("junit:junit:4.13")
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports.xml.required = true
+}

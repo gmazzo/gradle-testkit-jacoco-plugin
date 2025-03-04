@@ -1,6 +1,5 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
-import io.github.gmazzo.gradle.testkit.jacoco.DumpAction.Companion.dumpOnBuildFinished
 import org.gradle.api.Plugin
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.GradleVersion
@@ -17,10 +16,21 @@ class JacocoTestKitReportCoveragePlugin @Inject constructor(
 
         } else {
             @Suppress("DEPRECATION")
-            gradle.buildFinished {
-                RT.getAgent().dump(true)
-            }
+            gradle.buildFinished { dumpCoverageData() }
         }
+    }
+
+    companion object {
+
+        fun dumpCoverageData() = try {
+            RT.getAgent()
+
+        } catch (e: IllegalStateException) {
+            // it may not be started of no instrumented classes are run
+            e.printStackTrace()
+            null
+        }?.dump(true)
+
     }
 
 }
