@@ -29,7 +29,7 @@ class MyPluginFunctionalTest {
         temporaryFolder.root.resolve("settings.gradle").writeText(
             """
             plugins {
-                id("jacoco-testkit-coverage") # this will dump coverage data
+                id("jacoco-testkit-coverage") // this will dump coverage data
             }
 
             rootProject.name = "test-project"
