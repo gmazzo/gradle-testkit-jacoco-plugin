@@ -9,11 +9,22 @@ repositories {
     mavenCentral()
 }
 
+gradlePlugin {
+    plugins {
+        create("myPlugin") {
+            id = "myPlugin"
+            implementationClass = "org.test.myplugin.MyPlugin"
+        }
+    }
+}
+
 dependencies {
+    implementation("com.squareup:javapoet:1.13.0")
     testImplementation("junit:junit:4.13")
 }
 
 tasks.test {
+    workingDir = temporaryDir
     finalizedBy(tasks.jacocoTestReport)
 }
 
