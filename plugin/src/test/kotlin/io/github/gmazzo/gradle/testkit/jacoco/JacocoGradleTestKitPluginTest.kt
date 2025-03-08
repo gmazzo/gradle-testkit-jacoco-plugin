@@ -50,7 +50,7 @@ class JacocoGradleTestKitPluginTest {
 
         assertEquals(
             listOf(
-                "$projectDir/build/jacoco/instrumented-classes",
+                "$projectDir/build/jacoco/instrumented-classes/pluginUnderTestMetadata",
                 "$projectDir/build/classes/java/main",
                 "$projectDir/build/resources/main",
                 "$tempDir/work/.gradle-test-kit/caches/modules-2/files-2.1/com.squareup/javapoet/1.13.0/d6562d385049f35eb50403fa86bb11cce76b866a/javapoet-1.13.0.jar",
@@ -66,9 +66,8 @@ class JacocoGradleTestKitPluginTest {
                 "org/test/myplugin/utils/UtilsImpl.class",
                 "org/test/myplugin/utils/Utils.class",
                 "org/test/myplugin/MyPlugin.class",
-                "META-INF/gradle-plugins/myPlugin.properties",
             ),
-            projectDir.resolve("build/jacoco/instrumented-classes").run root@{
+            projectDir.resolve("build/jacoco/instrumented-classes/pluginUnderTestMetadata").run root@{
                 walkTopDown().filter { it.isFile }.map { it.toRelativeString(this@root) }.toSet()
             })
 
