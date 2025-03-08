@@ -3,7 +3,6 @@ package io.github.gmazzo.gradle.testkit.jacoco
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Classpath
 import org.gradle.api.tasks.InputFiles
@@ -23,7 +22,8 @@ abstract class JacocoInstrumentationTask : DefaultTask() {
 
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    internal val classesDirs: Provider<List<File>>
+    internal val classesDirs =
+        classpath.elements.map { it.mapNotNull { it.asFile.takeIf(File::isDirectory) } }
 
     @get:Classpath
     abstract val jacocoClasspath: ConfigurableFileCollection
@@ -31,17 +31,14 @@ abstract class JacocoInstrumentationTask : DefaultTask() {
     @get:OutputDirectory
     abstract val instrumentedClassesDir: DirectoryProperty
 
-    init {
-        with(project) {
-            classesDirs = classpath.elements.map { it.mapNotNull { it.asFile.takeIf(File::isDirectory) } }
-
-            instrumentedClassesDir
-                .convention(layout.dir(provider { temporaryDir.resolve("classes") }))
-        }
-    }
-
     @TaskAction
     fun transform(): Unit = with(ant) {
+        val outDir = instrumentedClassesDir.get().asFile
+
+        outDir.deleteRecursively()
+        outDir.mkdirs()
+        outDir.instrumentedMarker.createNewFile()
+
         invokeMethod(
             "taskdef",
             mapOf(
@@ -52,12 +49,17 @@ abstract class JacocoInstrumentationTask : DefaultTask() {
         )
 
         withGroovyBuilder {
-            "instrument"("destdir" to instrumentedClassesDir.get().asFile.absolutePath) {
+            "instrument"("destdir" to outDir) {
                 classesDirs.get().forEach {
-                    "fileset"("dir" to it.absolutePath)
+                    if (!it.instrumentedMarker.isFile) {
+                        "fileset"("dir" to it, "includes" to "**/*.class")
+                    }
                 }
             }
         }
     }
+
+    private val File.instrumentedMarker
+        get() = resolve(".jacoco-instrumented")
 
 }
