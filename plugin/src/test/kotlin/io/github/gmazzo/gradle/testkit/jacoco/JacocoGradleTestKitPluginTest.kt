@@ -66,6 +66,7 @@ class JacocoGradleTestKitPluginTest {
                 "org/test/myplugin/utils/UtilsImpl.class",
                 "org/test/myplugin/utils/Utils.class",
                 "org/test/myplugin/MyPlugin.class",
+                ".jacoco-instrumented",
             ),
             projectDir.resolve("build/jacoco/instrumented-classes/pluginUnderTestMetadata").run root@{
                 walkTopDown().filter { it.isFile }.map { it.toRelativeString(this@root) }.toSet()
