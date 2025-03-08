@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.gradle.pluginPublish)
     alias(libs.plugins.publicationsReport)
     id("io.github.gmazzo.gradle.testkit.jacoco") version "+" // yeah, self reference to latest published version, but we need it for computing coverage of tests
+    signing
 }
 
 group = "io.github.gmazzo.gradle.testkit.jacoco"
@@ -43,6 +44,15 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation(libs.mockk)
     testImplementation(jacocoRuntime)
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    publishing.publications.configureEach(::sign)
+    tasks.withType<Sign>().configureEach { enabled = signingKey != null }
 }
 
 testing.suites.withType<JvmTestSuite> {
