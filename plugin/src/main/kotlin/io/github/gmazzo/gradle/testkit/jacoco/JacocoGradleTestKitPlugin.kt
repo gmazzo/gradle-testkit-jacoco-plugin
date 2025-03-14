@@ -38,11 +38,12 @@ class JacocoGradleTestKitPlugin : Plugin<Project> {
                 val original = files(pluginClasspath.from.toList())
                 val outputDir = layout.buildDirectory.dir("jacoco/instrumented-classes/${this@task.name}")
 
-                val instrumentTask = tasks.register<JacocoInstrumentationTask>("instrument${this@task.name.replaceFirstChar { it.uppercase() }}Classes") {
-                    classpath.from(original)
-                    jacocoClasspath.from(configurations.named(ANT_CONFIGURATION_NAME))
-                    instrumentedClassesDir.set(outputDir)
-                }
+                val instrumentTask =
+                    tasks.register<JacocoInstrumentationTask>("instrument${this@task.name.replaceFirstChar { it.uppercase() }}Classes") {
+                        classpath.from(original)
+                        jacocoClasspath.from(configurations.named(ANT_CONFIGURATION_NAME))
+                        instrumentedClassesDir.set(outputDir)
+                    }
 
                 pluginClasspath.setFrom(
                     instrumentTask.map { it.instrumentedClassesDir },

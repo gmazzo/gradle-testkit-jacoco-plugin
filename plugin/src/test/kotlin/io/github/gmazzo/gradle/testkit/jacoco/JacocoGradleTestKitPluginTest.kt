@@ -1,5 +1,7 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
+import java.io.File
+import java.util.*
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.util.GradleVersion
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -8,8 +10,6 @@ import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
-import java.io.File
-import java.util.*
 
 @TestInstance(PER_CLASS)
 class JacocoGradleTestKitPluginTest {
@@ -31,9 +31,11 @@ class JacocoGradleTestKitPluginTest {
             File(this@JacocoGradleTestKitPluginTest.javaClass.getResource("/project")!!.path).copyRecursively(this)
         }
 
-        projectDir.resolve("build.gradle").appendText("""
+        projectDir.resolve("build.gradle").appendText(
+            """
             file("self-jar.txt").text = file(${JacocoGradleTestKitPlugin::class.qualifiedName}.class.protectionDomain.codeSource.location)
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         GradleRunner.create()
             .withProjectDir(projectDir)

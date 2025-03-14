@@ -1,14 +1,11 @@
 package org.test.myplugin;
 
-import org.apache.groovy.util.Maps;
-import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class MyPluginTest {
 
