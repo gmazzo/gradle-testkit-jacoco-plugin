@@ -1,5 +1,6 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
+import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
@@ -12,7 +13,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.withGroovyBuilder
-import java.io.File
 
 @CacheableTask
 abstract class JacocoInstrumentationTask : DefaultTask() {

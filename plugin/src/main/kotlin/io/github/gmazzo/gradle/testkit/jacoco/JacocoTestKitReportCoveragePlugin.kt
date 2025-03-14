@@ -1,10 +1,10 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
+import javax.inject.Inject
 import org.gradle.api.Plugin
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.GradleVersion
 import org.jacoco.agent.rt.RT
-import javax.inject.Inject
 
 class JacocoTestKitReportCoveragePlugin @Inject constructor(
     private val gradle: Gradle,

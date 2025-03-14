@@ -1,9 +1,9 @@
 package org.test.myplugin;
 
+import com.squareup.javapoet.ClassName;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.test.myplugin.utils.Utils;
-import com.squareup.javapoet.ClassName;
 
 class MyPlugin implements Plugin<Project> {
 
