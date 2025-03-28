@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.samReceiver)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.axion.release)
     alias(libs.plugins.mavenPublish)
+    alias(libs.plugins.gitVersion)
     alias(libs.plugins.gradle.pluginPublish)
     alias(libs.plugins.publicationsReport)
     id("io.github.gmazzo.gradle.testkit.jacoco") version "+" // yeah, self reference to latest published version, but we need it for computing coverage of tests
@@ -11,7 +11,6 @@ plugins {
 
 group = "io.github.gmazzo.gradle.testkit.jacoco"
 description = "Enables JaCoCo coverage collection for Gradle TestKit's GradleRunner tests"
-version = scmVersion.version
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
 samWithReceiver.annotation(HasImplicitReceiver::class.qualifiedName!!)
