@@ -5,6 +5,8 @@
 [![Coverage](https://codecov.io/gh/gmazzo/gradle-testkit-jacoco-plugin/branch/main/graph/badge.svg?token=D5cDiPWvcS)](https://codecov.io/gh/gmazzo/gradle-testkit-jacoco-plugin)
 [![Users](https://img.shields.io/badge/users_by-Sourcegraph-purple)](https://sourcegraph.com/search?q=content:io.github.gmazzo.gradle.testkit.jacoco+-repo:github.com/gmazzo/gradle-testkit-jacoco-plugin)
 
+[![Contributors](https://contrib.rocks/image?repo=gmazzo/gradle-testkit-jacoco-plugin)](https://github.com/gmazzo/gradle-testkit-jacoco-plugin/graphs/contributors)
+
 # gradle-testkit-jacoco-plugin
 A Gradle plugin that enables JaCoCo coverage collection for Gradle TestKit's GradleRunner tests.
  
