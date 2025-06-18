@@ -1,6 +1,7 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
 import java.io.File
+import java.util.Properties
 import org.gradle.kotlin.dsl.register
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -28,11 +29,13 @@ class JacocoAgentPropertiesTaskTest(
     fun `should generate jacoco agent properties file`() {
         task.get().generateAgentProperties()
 
+        val actual = outDir.resolve("jacoco-agent.properties").reader(Charsets.UTF_8).use {
+            Properties().apply { load(it) }
+        }
+
         assertEquals(
-            """
-            destfile=$execFile
-            """.trimIndent().trim(),
-            outDir.resolve("jacoco-agent.properties").readText().trim(),
+            mapOf("destfile" to execFile.absolutePath),
+            actual,
         )
     }
 
