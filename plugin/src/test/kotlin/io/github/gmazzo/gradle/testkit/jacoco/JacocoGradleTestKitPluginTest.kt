@@ -17,9 +17,9 @@ class JacocoGradleTestKitPluginTest {
     private val tempDir = File(System.getenv("TEMP_DIR"))
 
     fun testData() = listOf(
-        of("7.0"),
         of("8.0"),
-        of("8.1"),
+        of("8.14.3"),
+        of("9.0"),
         of(GradleVersion.current().version),
     )
 
