@@ -9,7 +9,7 @@ junit-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 mockk = { module = "io.mockk:mockk", version = "1.14.6" }
 
 [plugins]
-dokka = { id = "org.jetbrains.dokka-javadoc", version = "2.0.0" }
+dokka = { id = "org.jetbrains.dokka-javadoc", version = "2.1.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-samReceiver = { id = "org.jetbrains.kotlin.plugin.sam.with.receiver", version.ref = "kotlin" }
 gitVersion = { id = "io.github.gmazzo.gitversion", version = "1.5.1" }
