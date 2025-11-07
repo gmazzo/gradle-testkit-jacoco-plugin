@@ -1,0 +1,32 @@
+public abstract class io/github/gmazzo/gradle/testkit/jacoco/JacocoAgentPropertiesTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun generateAgentProperties ()V
+	public abstract fun getGeneratedResourcesDir ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getJacocoExecFile ()Lorg/gradle/api/file/RegularFileProperty;
+	public final fun getJacocoExecFilePath ()Lorg/gradle/api/provider/Provider;
+}
+
+public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoGradleTestKitPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public abstract class io/github/gmazzo/gradle/testkit/jacoco/JacocoInstrumentationTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public abstract fun getClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getInstrumentedClassesDir ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getJacocoClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun transform ()V
+}
+
+public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoTestKitReportCoveragePlugin : org/gradle/api/Plugin {
+	public static final field Companion Lio/github/gmazzo/gradle/testkit/jacoco/JacocoTestKitReportCoveragePlugin$Companion;
+	public fun <init> (Lorg/gradle/api/invocation/Gradle;)V
+	public fun apply (Ljava/lang/Object;)V
+}
+
+public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoTestKitReportCoveragePlugin$Companion {
+	public final fun dumpCoverageData ()Lkotlin/Unit;
+}
+
