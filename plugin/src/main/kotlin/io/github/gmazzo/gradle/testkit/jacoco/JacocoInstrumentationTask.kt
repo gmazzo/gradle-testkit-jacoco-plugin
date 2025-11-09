@@ -15,10 +15,10 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.withGroovyBuilder
 
 @CacheableTask
-abstract class JacocoInstrumentationTask : DefaultTask() {
+public abstract class JacocoInstrumentationTask : DefaultTask() {
 
     @get:Internal
-    abstract val classpath: ConfigurableFileCollection
+    public abstract val classpath: ConfigurableFileCollection
 
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
@@ -26,13 +26,13 @@ abstract class JacocoInstrumentationTask : DefaultTask() {
         classpath.elements.map { it.mapNotNull { it.asFile.takeIf(File::isDirectory) } }
 
     @get:Classpath
-    abstract val jacocoClasspath: ConfigurableFileCollection
+    public abstract val jacocoClasspath: ConfigurableFileCollection
 
     @get:OutputDirectory
-    abstract val instrumentedClassesDir: DirectoryProperty
+    public abstract val instrumentedClassesDir: DirectoryProperty
 
     @TaskAction
-    fun transform(): Unit = with(ant) {
+    public fun transform(): Unit = with(ant) {
         val outDir = instrumentedClassesDir.get().asFile
 
         outDir.deleteRecursively()
