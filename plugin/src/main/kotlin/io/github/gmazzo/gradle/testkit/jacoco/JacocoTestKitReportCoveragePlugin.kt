@@ -6,7 +6,7 @@ import org.gradle.api.invocation.Gradle
 import org.gradle.util.GradleVersion
 import org.jacoco.agent.rt.RT
 
-class JacocoTestKitReportCoveragePlugin @Inject constructor(
+public class JacocoTestKitReportCoveragePlugin @Inject constructor(
     private val gradle: Gradle,
 ) : Plugin<Any> {
 
@@ -20,9 +20,9 @@ class JacocoTestKitReportCoveragePlugin @Inject constructor(
         }
     }
 
-    companion object {
+    public companion object {
 
-        fun dumpCoverageData() = try {
+        public fun dumpCoverageData(): Unit? = try {
             RT.getAgent()
 
         } catch (e: IllegalStateException) {

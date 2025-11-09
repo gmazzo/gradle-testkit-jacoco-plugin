@@ -12,17 +12,17 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.work.DisableCachingByDefault
 
 @DisableCachingByDefault(because = "Uses an absolut file path")
-abstract class JacocoAgentPropertiesTask : DefaultTask() {
+public abstract class JacocoAgentPropertiesTask : DefaultTask() {
 
     @get:Internal
-    abstract val jacocoExecFile: RegularFileProperty
+    public abstract val jacocoExecFile: RegularFileProperty
 
     @get:Input
-    val jacocoExecFilePath: Provider<String> =
+    public val jacocoExecFilePath: Provider<String> =
         jacocoExecFile.asFile.map { it.absolutePath }
 
     @get:OutputDirectory
-    abstract val generatedResourcesDir: DirectoryProperty
+    public abstract val generatedResourcesDir: DirectoryProperty
 
     init {
         with(project) {
@@ -32,7 +32,7 @@ abstract class JacocoAgentPropertiesTask : DefaultTask() {
     }
 
     @TaskAction
-    fun generateAgentProperties(): Unit = generatedResourcesDir.get().asFile
+    public fun generateAgentProperties(): Unit = generatedResourcesDir.get().asFile
         .apply { deleteRecursively(); mkdirs() }
         .resolve("jacoco-agent.properties")
         .writer(Charsets.UTF_8)

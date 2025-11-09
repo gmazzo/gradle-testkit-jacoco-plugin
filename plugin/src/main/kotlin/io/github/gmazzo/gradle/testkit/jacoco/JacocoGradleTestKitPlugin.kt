@@ -15,7 +15,7 @@ import org.gradle.testing.jacoco.plugins.JacocoPlugin.ANT_CONFIGURATION_NAME
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 
-class JacocoGradleTestKitPlugin : Plugin<Project> {
+public class JacocoGradleTestKitPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         apply(plugin = "java-gradle-plugin")
