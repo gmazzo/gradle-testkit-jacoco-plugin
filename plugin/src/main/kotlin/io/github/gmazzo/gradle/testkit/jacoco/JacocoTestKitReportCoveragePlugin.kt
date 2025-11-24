@@ -22,14 +22,17 @@ public class JacocoTestKitReportCoveragePlugin @Inject constructor(
 
     public companion object {
 
-        public fun dumpCoverageData(): Unit? = try {
-            RT.getAgent()
+        public fun dumpCoverageData() {
+            try {
+                RT.getAgent().dump(true)
 
-        } catch (e: IllegalStateException) {
-            // it may not be started of no instrumented classes are run
-            e.printStackTrace()
-            null
-        }?.dump(true)
+            } catch (e: IllegalStateException) {
+                // it may not be started of no instrumented classes are run
+                if (e.message?.contains("JaCoCo agent not started") != true) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
     }
 
