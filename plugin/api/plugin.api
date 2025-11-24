@@ -27,6 +27,6 @@ public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoTestKitReportCov
 }
 
 public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoTestKitReportCoveragePlugin$Companion {
-	public final fun dumpCoverageData ()Lkotlin/Unit;
+	public final fun dumpCoverageData ()V
 }
 
