@@ -6,7 +6,7 @@ kotlin = "2.2.21"
 jacoco = { module = "org.jacoco:org.jacoco.agent", version = "0.8.14" }
 junit-bom = { module = "org.junit:junit-bom", version = "6.0.1" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params" }
-mockk = { module = "io.mockk:mockk", version = "1.14.6" }
+mockk = { module = "io.mockk:mockk", version = "1.14.7" }
 
 [plugins]
 dokka = { id = "org.jetbrains.dokka-javadoc", version = "2.1.0" }
