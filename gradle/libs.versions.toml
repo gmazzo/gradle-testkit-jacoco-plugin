@@ -1,6 +1,6 @@
 [versions]
 java = "17"
-kotlin = "2.3.10"
+kotlin = "2.3.20"
 
 [libraries]
 jacoco = { module = "org.jacoco:org.jacoco.agent", version = "0.8.14" }
