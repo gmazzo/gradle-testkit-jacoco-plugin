@@ -32,23 +32,19 @@ public abstract class JacocoInstrumentationTask : DefaultTask() {
     public abstract val instrumentedClassesDir: DirectoryProperty
 
     @TaskAction
-    public fun transform(): Unit = with(ant) {
+    public fun transform() {
         val outDir = instrumentedClassesDir.get().asFile
 
         outDir.deleteRecursively()
         outDir.mkdirs()
         outDir.instrumentedMarker.createNewFile()
 
-        invokeMethod(
-            "taskdef",
-            mapOf(
+        project.createAntBuilder().withGroovyBuilder {
+            "taskdef"(
                 "name" to "instrument",
                 "classname" to "org.jacoco.ant.InstrumentTask",
                 "classpath" to jacocoClasspath.asPath,
             )
-        )
-
-        withGroovyBuilder {
             "instrument"("destdir" to outDir) {
                 classesDirs.get().forEach {
                     if (!it.instrumentedMarker.isFile) {
