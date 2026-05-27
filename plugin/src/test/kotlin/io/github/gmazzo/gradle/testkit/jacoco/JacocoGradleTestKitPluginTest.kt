@@ -17,8 +17,7 @@ class JacocoGradleTestKitPluginTest {
     private val tempDir = File(System.getenv("TEMP_DIR"))
 
     fun testData() = listOf(
-        of("8.0"),
-        of("8.14.3"),
+        of(MIN_GRADLE_VERSION.version),
         of("9.0"),
         of(GradleVersion.current().version),
     )
@@ -41,7 +40,7 @@ class JacocoGradleTestKitPluginTest {
             .withProjectDir(projectDir)
             .withGradleVersion(gradleVersion)
             .withPluginClasspath()
-            .withArguments("test", "-s")
+            .withArguments("test", "--configuration-cache")
             .build()
 
         val actualClasspath = with(Properties()) {

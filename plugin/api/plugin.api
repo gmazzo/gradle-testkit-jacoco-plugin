@@ -13,7 +13,7 @@ public final class io/github/gmazzo/gradle/testkit/jacoco/JacocoGradleTestKitPlu
 }
 
 public abstract class io/github/gmazzo/gradle/testkit/jacoco/JacocoInstrumentationTask : org/gradle/api/DefaultTask {
-	public fun <init> ()V
+	public fun <init> (Lorg/gradle/api/internal/project/AntBuilderFactory;)V
 	public abstract fun getClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
 	public abstract fun getInstrumentedClassesDir ()Lorg/gradle/api/file/DirectoryProperty;
 	public abstract fun getJacocoClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;

@@ -18,9 +18,13 @@ import org.jacoco.agent.rt.IAgent
 import org.jacoco.agent.rt.RT
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.MethodSource
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JacocoTestKitReportCoveragePluginTest {
 
     val gradle: GradleInternal = mockk {
@@ -33,30 +37,25 @@ class JacocoTestKitReportCoveragePluginTest {
 
     val plugin = JacocoTestKitReportCoveragePlugin(gradle)
 
-    @ParameterizedTest(name = "gradle={0}, flowAPI={1}")
-    @CsvSource(
-        "7.0, false",
-        "8.0, false",
-        "8.1, true",
-        "9.0, true",
+    fun testData() = listOf(
+        of(MIN_GRADLE_VERSION),
+        of(GradleVersion.version("9.0")),
+        of(GradleVersion.current()),
     )
-    fun `should report coverage when build finishes`(gradleVersion: String, flowAPI: Boolean) =
+
+    @ParameterizedTest(name = "gradle={0}, flowAPI={1}")
+    @MethodSource("testData")
+    fun `should report coverage when build finishes`(gradleVersion: GradleVersion) =
         mockkStatic(GradleVersion::current, GradleInternal::dumpOnBuildFinished) {
             mockkObject(JacocoTestKitReportCoveragePlugin) {
                 justRun { gradle.dumpOnBuildFinished() }
                 justRun { dumpCoverageData() }
-                every { GradleVersion.current() } returns GradleVersion.version(gradleVersion)
+                every { GradleVersion.current() } returns gradleVersion
 
                 plugin.apply(mockk())
 
                 verify {
-                    if (flowAPI) {
-                        gradle.dumpOnBuildFinished()
-
-                    } else {
-                        gradle.buildFinished(any<Action<BuildResult>>())
-                        dumpCoverageData()
-                    }
+                    gradle.dumpOnBuildFinished()
                 }
             }
         }
