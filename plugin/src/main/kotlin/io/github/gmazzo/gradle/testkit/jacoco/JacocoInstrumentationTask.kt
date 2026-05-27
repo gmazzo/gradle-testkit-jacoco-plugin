@@ -1,9 +1,11 @@
 package io.github.gmazzo.gradle.testkit.jacoco
 
 import java.io.File
+import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.internal.project.AntBuilderFactory
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Classpath
 import org.gradle.api.tasks.InputFiles
@@ -15,7 +17,9 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.withGroovyBuilder
 
 @CacheableTask
-public abstract class JacocoInstrumentationTask : DefaultTask() {
+public abstract class JacocoInstrumentationTask @Inject constructor(
+    private val antBuilderFactory: AntBuilderFactory,
+) : DefaultTask() {
 
     @get:Internal
     public abstract val classpath: ConfigurableFileCollection
@@ -23,7 +27,7 @@ public abstract class JacocoInstrumentationTask : DefaultTask() {
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
     internal val classesDirs =
-        classpath.elements.map { it.mapNotNull { it.asFile.takeIf(File::isDirectory) } }
+        classpath.elements.map { it.mapNotNull { f -> f.asFile.takeIf(File::isDirectory) } }
 
     @get:Classpath
     public abstract val jacocoClasspath: ConfigurableFileCollection
@@ -39,7 +43,7 @@ public abstract class JacocoInstrumentationTask : DefaultTask() {
         outDir.mkdirs()
         outDir.instrumentedMarker.createNewFile()
 
-        project.createAntBuilder().withGroovyBuilder {
+        antBuilderFactory.createAntBuilder().withGroovyBuilder {
             "taskdef"(
                 "name" to "instrument",
                 "classname" to "org.jacoco.ant.InstrumentTask",

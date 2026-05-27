@@ -14,10 +14,15 @@ import org.gradle.plugin.devel.tasks.PluginUnderTestMetadata
 import org.gradle.testing.jacoco.plugins.JacocoPlugin.ANT_CONFIGURATION_NAME
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
+import org.gradle.util.GradleVersion
 
 public class JacocoGradleTestKitPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
+        check(GradleVersion.current() >= MIN_GRADLE_VERSION) {
+            "This plugin requires Gradle $MIN_GRADLE_VERSION or higher."
+        }
+
         apply(plugin = "java-gradle-plugin")
         apply(plugin = "jacoco")
 
