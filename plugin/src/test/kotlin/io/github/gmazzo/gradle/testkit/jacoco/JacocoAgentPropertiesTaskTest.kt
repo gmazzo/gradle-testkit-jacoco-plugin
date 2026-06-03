@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
 class JacocoAgentPropertiesTaskTest(
-    @TempDir private val projectDir: File
+    @param:TempDir private val projectDir: File
 ) {
 
     private val project = ProjectBuilder.builder()
