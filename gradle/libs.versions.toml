@@ -3,7 +3,7 @@ java = "17"
 kotlin = "2.4.0"
 
 [libraries]
-jacoco = { module = "org.jacoco:org.jacoco.agent", version = "0.8.14" }
+jacoco = { module = "org.jacoco:org.jacoco.agent", version = "0.8.15" }
 junit-bom = { module = "org.junit:junit-bom", version = "6.1.0" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 mockk = { module = "io.mockk:mockk", version = "1.14.11" }
