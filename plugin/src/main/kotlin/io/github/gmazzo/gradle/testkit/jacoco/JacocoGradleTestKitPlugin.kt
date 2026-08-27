@@ -4,10 +4,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.TEST_TASK_NAME
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.provideDelegate
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugin.devel.tasks.PluginUnderTestMetadata
@@ -26,9 +24,9 @@ public class JacocoGradleTestKitPlugin : Plugin<Project> {
         apply(plugin = "java-gradle-plugin")
         apply(plugin = "jacoco")
 
-        val jacoco: JacocoPluginExtension by extensions
+        val jacoco = extensions.getByType<JacocoPluginExtension>()
 
-        val jacocoRuntime by configurations.registering {
+        val jacocoRuntime = configurations.register("jacocoRuntime") {
             defaultDependencies {
                 add(project.dependencies.create("org.jacoco:org.jacoco.agent:${jacoco.toolVersion}:runtime"))
             }
